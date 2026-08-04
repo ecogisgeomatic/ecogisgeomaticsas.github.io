@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECOGIS GEOMATIC S.A.S</title>
+<link rel="icon" type="image/png" href="images/isotipo.png">
+<style>
+:root{
+--bg:#F5F6FA;
+--bg2:#FFFFFF;
+--bg3:#EEF0FA;
+--accent:#3c3cff;
+--accent-light:#E8E8FF;
+--accent-mid:#00CDFF;
+--dark:#000000;
+--text:#374845;
+--text-muted:#5F6D6A;
+--border:#D7DCE3;
+--border2:#E7EAF2;
+--white:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Trebuchet MS','Verdana',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+.container{width:90%;max-width:1340px;margin:auto;}
+section{padding:100px 0;}
+
+/* NAV */
+nav{
+position:fixed;top:0;width:100%;z-index:9999;
+background:rgba(244,251,246,.93);
+backdrop-filter:blur(16px);
+border-bottom:1px solid var(--border2);
+transition:.3s;
+}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.07);}
+.nav-content{display:flex;justify-content:space-between;align-items:center;padding:16px 0;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.brand-logo{height:36px;width:auto;display:block;}
+.menu{display:flex;align-items:center;gap:4px;}
+.menu a{
+text-decoration:none;font-size:.875rem;font-weight:500;color:var(--text);
+padding:8px 14px;border-radius:8px;transition:.2s;
+}
+.menu a:hover{color:var(--accent);background:var(--accent-light);}
+.menu-cta{
+background:var(--accent)!important;color:#fff!important;
+padding:9px 20px!important;border-radius:9px!important;
+}
+.menu-cta:hover{background:#1F1FCC!important;color:#fff!important;}
+.hamburger{
+display:none;flex-direction:column;gap:5px;cursor:pointer;
+padding:6px;background:none;border:none;
+}
+.hamburger span{display:block;width:22px;height:2px;background:var(--accent);border-radius:2px;transition:.3s;}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.active span:nth-child(2){opacity:0;}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+.mobile-menu{
+display:none;position:absolute;top:100%;left:0;right:0;
+background:var(--white);border-bottom:1px solid var(--border2);
+padding:16px;flex-direction:column;gap:4px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+text-decoration:none;font-size:.95rem;font-weight:500;color:var(--text);
+padding:12px 14px;border-radius:8px;transition:.2s;
+}
+.mobile-menu a:hover{color:var(--accent);background:var(--accent-light);}
+
+/* HERO */
+.hero{
+min-height:100vh;display:flex;align-items:center;
+position:relative;padding-top:76px;
+background:var(--bg2);overflow:hidden;
+}
+.hero::before{
+content:'';position:absolute;inset:0;z-index:0;
+background-image:url('images/hero/portada.jpg');
+background-size:cover;background-position:center;
+filter:brightness(.5) saturate(1.1);
+}
+.hero::after{
+content:'';position:absolute;inset:0;z-index:1;
+background:linear-gradient(135deg,rgba(22, 209, 255, 0.62),rgba(96, 203, 183, 0));
+}
+.hero-deco{
+position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden;
+}
+.hero-deco svg{position:absolute;right:-60px;top:50%;transform:translateY(-50%);width:55%;opacity:.20;}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:70px;align-items:center;position:relative;z-index:2;}
+.hero-content{max-width:680px;}
+.hero-eyebrow{
+display:inline-flex;align-items:center;gap:8px;
+font-family:'Trebuchet MS','Verdana',sans-serif;font-size:.68rem;
+color:var(--accent);letter-spacing:1.8px;text-transform:uppercase;
+background:var(--accent-light);border:1px solid var(--border);
+padding:7px 14px;border-radius:6px;margin-bottom:24px;
+}
+.hero-eyebrow span{
+width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.4s infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.hero-content h1{
+font-size:3.4rem;line-height:1.15;margin-bottom:22px;
+font-weight:800;color:#fff;letter-spacing:-.5px;
+}
+.hero-content h1 em{font-style:normal;color:#fff;}
+.hero-content p{
+font-size:1rem;line-height:1.85;color:rgba(255,255,255,.88);
+margin-bottom:36px;max-width:560px;font-weight:400;
+}
+.hero-buttons{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+padding:13px 26px;border-radius:10px;font-weight:600;font-size:.9rem;
+text-decoration:none;transition:.25s;display:inline-flex;
+align-items:center;gap:9px;cursor:pointer;border:none;
+font-family:'Trebuchet MS','Verdana',sans-serif;
+}
+.btn-primary{
+background:var(--accent);color:white;
+box-shadow:0 4px 18px rgba(42,42,255,.25);
+}
+.btn-primary:hover{background:#1F1FCC;transform:translateY(-2px);box-shadow:0 8px 24px rgba(42,42,255,.3);}
+.btn-outline{border:1.5px solid var(--border);color:var(--accent);background:white;}
+.btn-outline:hover{background:var(--accent-light);border-color:var(--accent);transform:translateY(-2px);}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;}
+.tag{
+font-family:'Trebuchet MS','Verdana',sans-serif;font-size:.65rem;
+color:var(--text-muted);background:var(--bg3);
+border:1px solid var(--border2);padding:5px 11px;
+border-radius:5px;letter-spacing:.4px;
+}
+.hero-tags .tag{
+color:#fff;background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+}
+.hero-visual{position:relative;}
+.hero-img-wrap{
+border-radius:22px;overflow:hidden;
+border:1px solid var(--border);
+box-shadow:0 20px 60px rgba(0,0,0,.1);
+position:relative;
+}
+.hero-img-wrap img{width:100%;display:block;filter:saturate(1.1);}
+.hero-img-wrap::after{
+content:'';position:absolute;inset:0;
+background:linear-gradient(135deg,rgba(42,42,255,.05),transparent 60%);
+}
+.coord-badge{
+position:absolute;bottom:-14px;left:20px;
+background:white;border:1px solid var(--border);
+border-radius:8px;padding:9px 16px;
+font-family:'Trebuchet MS','Verdana',sans-serif;font-size:.66rem;
+color:var(--accent);display:flex;gap:14px;
+box-shadow:0 4px 14px rgba(0,0,0,.07);
+}
+
+/* SECTION TITLES */
+.section-title{text-align:center;margin-bottom:60px;}
+.section-label{
+display:inline-block;font-family:'Trebuchet MS','Verdana',sans-serif;font-size:.65rem;
+color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;
+}
+.section-title h2{
+font-size:2.4rem;font-weight:800;color:var(--dark);
+margin-bottom:14px;letter-spacing:-.3px;
+}
+.section-title p{max-width:600px;margin:auto;line-height:1.85;color:var(--text-muted);font-size:.95rem;}
+
+/* SERVICES */
+#servicios{background:var(--bg3);padding-top:50px;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
+.card{
+background:var(--white);border-radius:18px;overflow:hidden;
+border:1px solid var(--border2);transition:.35s;cursor:pointer;
+}
+.card:hover{transform:translateY(-6px);border-color:var(--border);box-shadow:0 16px 40px rgba(0,0,0,.08);}
+.card img{width:100%;height:200px;object-fit:cover;filter:saturate(.95);}
+.card-content{padding:26px;}
+.card-icon{
+width:40px;height:40px;border-radius:10px;
+background:var(--accent-light);
+display:flex;align-items:center;justify-content:center;margin-bottom:14px;
+}
+.card-icon svg{width:18px;height:18px;stroke:var(--accent);}
+.card-content h3{
+font-size:1.15rem;font-weight:700;color:var(--dark);margin-bottom:8px;
+}
+.card-content p{line-height:1.7;color:var(--text-muted);font-size:.88rem;}
+.card-arrow{
+margin-top:16px;font-size:.8rem;color:var(--accent);font-weight:600;
+font-family:'Trebuchet MS','Verdana',sans-serif;letter-spacing:.4px;
+}
+
+/* MISIÓN Y VISIÓN */
+#mision-vision{background:var(--bg2);}
+.mv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:10px;}
+.mv-card{
+position:relative;background:var(--white);border:1px solid var(--border2);
+border-radius:20px;padding:34px 30px;overflow:hidden;transition:.35s;
+}
+.mv-card::before{
+content:'';position:absolute;top:0;left:0;right:0;height:4px;
+background:linear-gradient(90deg,var(--accent),var(--accent-mid));
+}
+.mv-card:hover{transform:translateY(-8px);box-shadow:0 20px 46px rgba(0,0,0,.09);border-color:var(--border);}
+.mv-icon{
+width:52px;height:52px;border-radius:14px;background:var(--accent-light);
+display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+}
+.mv-icon svg{width:24px;height:24px;stroke:var(--accent);}
+.mv-card h3{font-size:1.2rem;font-weight:700;color:var(--dark);margin-bottom:12px;}
+.mv-card p{line-height:1.8;color:var(--text-muted);font-size:.9rem;}
+.mv-values-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin-top:4px;}
+.mv-values-list li{
+display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text-muted);font-weight:500;
+}
+.mv-values-list li svg{width:16px;height:16px;stroke:var(--accent);flex-shrink:0;}
+@media(max-width:900px){.mv-grid{grid-template-columns:1fr;}}
+
+/* TEAM */
+#equipo{background:var(--bg3);}
+
+/* GALERÍA */
+.gallery-section{background:var(--bg3);padding:60px 0;overflow:hidden;}
+.gallery-wrap{position:relative;width:100%;}
+.gallery-track{
+display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;
+padding:6px 60px 26px;scrollbar-width:none;-ms-overflow-style:none;
+}
+.gallery-track::-webkit-scrollbar{display:none;}
+.gallery-item{
+flex:0 0 auto;width:300px;height:440px;border-radius:16px;overflow:hidden;
+scroll-snap-align:start;border:1px solid var(--border2);position:relative;
+}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:.5s;}
+.gallery-item:hover img{transform:scale(1.07);}
+.gallery-caption{
+position:absolute;left:0;right:0;bottom:0;padding:16px 18px;
+background:linear-gradient(0deg,rgba(0,0,0,.65),transparent);
+color:#fff;font-size:.85rem;font-weight:600;
+}
+.gallery-arrow{
+position:absolute;top:50%;transform:translateY(-50%);
+width:48px;height:48px;border-radius:50%;background:var(--white);
+border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;
+cursor:pointer;z-index:3;box-shadow:0 8px 22px rgba(0,0,0,.12);transition:.2s;
+}
+.gallery-arrow:hover{background:var(--accent);border-color:var(--accent);}
+.gallery-arrow:hover svg{stroke:#fff;}
+.gallery-arrow svg{width:20px;height:20px;stroke:var(--dark);fill:none;stroke-width:2;transition:.2s;}
+.gallery-arrow-left{left:14px;}
+.gallery-arrow-right{right:14px;}
+@media(max-width:640px){
+.gallery-item{width:230px;height:340px;}
+.gallery-arrow{width:38px;height:38px;}
+}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;}
+.team-member{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--border2);transition:.35s;text-align:center;}
+.team-member:hover{transform:translateY(-6px);border-color:var(--border);box-shadow:0 16px 40px rgba(0,0,0,.08);}
+.team-member-img{width:100%;height:280px;object-fit:cover;}
+.team-member-content{padding:24px;}
+.team-member-content h4{font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.team-member-content .role{font-size:.8rem;color:var(--accent);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;}
+.team-member-content .profession{font-size:.85rem;color:var(--text-muted);line-height:1.6;}
+
+/* STATS */
+.stats{background:var(--accent);position:relative;overflow:hidden;}
+.stats-deco{position:absolute;inset:0;pointer-events:none;}
+.stats-deco svg{position:absolute;right:0;top:0;width:50%;opacity:.08;}
+.stats-grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+position:relative;z-index:1;
+}
+.stat{
+text-align:center;padding:56px 24px;
+border-right:1px solid rgba(255,255,255,.2);
+}
+.stat:last-child{border-right:none;}
+.stat-number{
+font-family:'Trebuchet MS','Verdana',sans-serif;font-size:3rem;font-weight:800;
+color:white;margin-bottom:8px;line-height:1;letter-spacing:-.5px;
+}
+.stat p{color:rgba(255,255,255,.8);font-size:.82rem;letter-spacing:1px;text-transform:uppercase;font-family:'Trebuchet MS','Verdana',sans-serif;}
+
+/* PROJECTS */
+#proyectos{background:var(--bg2);}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:16px;}
+.project{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--border2);cursor:pointer;}
+.project:first-child{grid-column:1/3;}
+.project img{
+width:100%;height:100%;object-fit:cover;min-height:300px;
+transition:.5s;filter:brightness(.75);
+}
+.project:hover img{transform:scale(1.05);filter:brightness(.6);}
+.project-overlay{
+position:absolute;inset:0;
+background:linear-gradient(0deg,rgba(0,0,0,.88) 0%,transparent 55%);
+display:flex;align-items:flex-end;padding:24px;
+}
+.project-tag{
+font-family:'Trebuchet MS','Verdana',sans-serif;font-size:.62rem;
+color:#00CDFF;background:rgba(42,42,255,.3);
+border:1px solid rgba(0,205,255,.3);padding:4px 9px;
+border-radius:4px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;
+}
+.project-overlay h3{font-size:1.25rem;font-weight:700;color:white;letter-spacing:-.2px;}
+.project-info{display:flex;flex-direction:column;gap:5px;}
+
+/* PROCESS */
+#proceso{background:var(--bg3);}
+.process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));}
+.process-step{
+padding:36px 30px;
+border-right:1px solid var(--border2);
+border-bottom:1px solid var(--border2);
+background:white;
+transition:.25s;
+}
+.process-step:hover{background:var(--accent-light);}
+.process-step:nth-child(n+5){border-bottom:none;}
+.process-step:last-child{border-right:none;}
+.step-num{
+font-family:'Trebuchet MS','Verdana',sans-serif;font-size:.65rem;
+color:var(--accent);letter-spacing:2px;margin-bottom:14px;
+}
+.process-step h4{font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:8px;}
+.process-step p{font-size:.85rem;line-height:1.7;color:var(--text-muted);}
+
+/* CONTACT */
+#contacto{background:var(--bg2);}
+.contact-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;}
+.contact-left h2{font-size:2.4rem;font-weight:800;color:var(--dark);margin-bottom:16px;letter-spacing:-.3px;line-height:1.2;}
+.contact-left p{line-height:1.85;color:var(--text-muted);margin-bottom:30px;font-size:.95rem;}
+.contact-info{display:flex;flex-direction:column;gap:14px;}
+.contact-item{display:flex;align-items:center;gap:12px;font-size:.9rem;color:var(--text);}
+.contact-item svg{width:17px;height:17px;stroke:var(--accent);flex-shrink:0;}
+.contact-form{background:var(--bg3);border:1px solid var(--border2);border-radius:20px;padding:36px;}
+.form-group{margin-bottom:16px;}
+.form-group label{
+display:block;font-size:.75rem;font-weight:600;
+color:var(--text-muted);margin-bottom:7px;
+font-family:'Trebuchet MS','Verdana',sans-serif;letter-spacing:.6px;text-transform:uppercase;
+}
+.form-group input,
+.form-group textarea,
+.form-group select{
+width:100%;padding:11px 14px;border-radius:9px;
+background:white;border:1px solid var(--border);
+color:var(--dark);font-size:.9rem;font-family:'Trebuchet MS','Verdana',sans-serif;
+transition:.2s;outline:none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(42,42,255,.1);}
+.form-group textarea{resize:vertical;min-height:90px;}
+.form-group select option{background:white;color:var(--dark);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* FOOTER */
+footer{background:var(--dark);padding:56px 0 28px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px;}
+.footer-logo{display:flex;align-items:center;gap:11px;text-decoration:none;margin-bottom:14px;}
+.footer-logo .brand-logo{height:34px;}
+.footer-brand p{font-size:.85rem;line-height:1.8;color:rgba(255,255,255,.45);max-width:260px;}
+.footer-col h5{font-size:.85rem;font-weight:700;color:white;margin-bottom:16px;}
+.footer-col a{display:block;text-decoration:none;font-size:.83rem;color:rgba(255,255,255,.45);margin-bottom:9px;transition:.2s;}
+.footer-col a:hover{color:var(--accent-mid);}
+.footer-social{display:flex;gap:10px;margin-top:20px;}
+.footer-social a{
+width:38px;height:38px;border-radius:50%;
+background:rgba(255,255,255,.08);
+display:flex;align-items:center;justify-content:center;
+transition:.2s;
+}
+.footer-social a:hover{background:var(--accent);transform:translateY(-2px);}
+.footer-social svg{width:17px;height:17px;fill:white;}
+.footer-bottom{
+border-top:1px solid rgba(255,255,255,.08);padding-top:22px;
+display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+}
+.footer-bottom p{font-size:.78rem;color:rgba(255,255,255,.35);}
+.footer-mono{font-family:'Trebuchet MS','Verdana',sans-serif;font-size:.66rem;color:rgba(0,205,255,.6);}
+
+/* MODAL */
+.modal{
+display:none;position:fixed;z-index:99999;inset:0;
+background:rgba(0,0,0,.7);backdrop-filter:blur(10px);
+padding:40px 20px;overflow-y:auto;
+}
+.modal.active{display:flex;align-items:flex-start;justify-content:center;}
+.modal-box{
+background:white;max-width:860px;width:100%;
+border-radius:22px;overflow:hidden;
+border:1px solid var(--border);
+box-shadow:0 40px 80px rgba(0,0,0,.2);
+animation:slideUp .3s cubic-bezier(.22,.68,0,1.2);
+margin:auto;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.modal-img{position:relative;overflow:hidden;height:300px;}
+.modal-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);}
+.modal-img-overlay{
+position:absolute;inset:0;
+background:linear-gradient(0deg,rgba(255,255,255,.9),transparent 50%);
+}
+.modal-close{
+position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:8px;
+background:rgba(255,255,255,.9);border:1px solid var(--border);
+color:var(--dark);font-size:1rem;cursor:pointer;
+display:flex;align-items:center;justify-content:center;
+transition:.2s;z-index:10;
+}
+.modal-close:hover{background:var(--accent-light);}
+.modal-body{padding:36px;}
+.modal-eyebrow{
+font-family:'Trebuchet MS','Verdana',sans-serif;font-size:.64rem;
+color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;
+}
+.modal-body h2{font-size:1.9rem;font-weight:800;color:var(--dark);margin-bottom:14px;letter-spacing:-.3px;}
+.modal-body > p{line-height:1.85;color:var(--text-muted);margin-bottom:28px;font-size:.93rem;}
+.modal-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;}
+.feat-item{
+background:var(--bg3);border:1px solid var(--border2);
+border-radius:12px;padding:20px;transition:.2s;
+}
+.feat-item:hover{border-color:var(--border);}
+.feat-icon{
+width:34px;height:34px;border-radius:8px;background:var(--accent-light);
+display:flex;align-items:center;justify-content:center;margin-bottom:10px;
+}
+.feat-icon svg{width:16px;height:16px;stroke:var(--accent);}
+.feat-item h4{font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:5px;}
+.feat-item p{font-size:.8rem;line-height:1.6;color:var(--text-muted);}
+
+/* WHATSAPP */
+.whatsapp-float{
+position:fixed;bottom:26px;right:26px;width:56px;height:56px;
+background:#3550e9;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+box-shadow:0 6px 24px rgba(17, 193, 209, 0.4);z-index:99999;
+transition:.3s;animation:waPulse 2.5s infinite;
+}
+.whatsapp-float:hover{transform:scale(1.1);}
+@keyframes waPulse{
+0%{box-shadow:0 0 0 0 rgba(20, 164, 232, 0.45);}
+70%{box-shadow:0 0 0 16px rgba(37,211,102,0);}
+100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}
+}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:.6s cubic-bezier(.22,.68,0,1.1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:1050px){
+.footer-grid{grid-template-columns:1fr 1fr;}
+.footer-brand{grid-column:1/-1;}
+}
+@media(max-width:880px){
+.hero-grid,.contact-wrapper{grid-template-columns:1fr;}
+.hero-content h1{font-size:2.6rem;}
+.hero-deco{display:none;}
+.projects-grid{grid-template-columns:1fr 1fr;}
+.project:first-child{grid-column:1/-1;}
+.menu{display:none;}
+.hamburger{display:flex;}
+section{padding:72px 0;}
+}
+@media(max-width:580px){
+.hero-content h1{font-size:2.1rem;}
+.section-title h2{font-size:1.9rem;}
+.projects-grid{grid-template-columns:1fr;}
+.project:first-child{grid-column:auto;}
+.contact-form{padding:22px;}
+.form-row{grid-template-columns:1fr;}
+.footer-grid{grid-template-columns:1fr;}
+.stats-grid{grid-template-columns:1fr 1fr;}
+.stat{border-right:none;border-bottom:1px solid rgba(255,255,255,.2);}
+.stat:last-child{border-bottom:none;}
+.modal-body{padding:24px;}
+.modal-img{height:200px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+<div class="container nav-content">
+  <a class="logo" href="#inicio">
+    <img src="images/logo-principal.svg" alt="ECOGIS GEOMATIC S.A.S" class="brand-logo">
+  </a>
+  <div class="menu">
+    <a href="#inicio">Inicio</a>
+    <a href="#Nosotros">Nosotros</a>
+    <a href="#servicios">Portafolio</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#contacto" class="menu-cta">Cotizar</a>
+  </div>
+  <button class="hamburger" id="ham" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#inicio" onclick="closeMobileMenu()">Inicio</a>
+  <a href="#Nosotros" onclick="closeMobileMenu()">Nosotros</a>
+  <a href="#servicios" onclick="closeMobileMenu()">Portafolio</a>
+  <a href="#proceso" onclick="closeMobileMenu()">Proceso</a>
+  <a href="#contacto" onclick="closeMobileMenu()">Cotizar</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+<div class="hero-deco">
+  <svg viewBox="0 0 700 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="380" cy="280" rx="160" ry="80" stroke="#2A2AFF" stroke-width="1.2"/>
+    <ellipse cx="380" cy="280" rx="240" ry="130" stroke="#2A2AFF" stroke-width="1"/>
+    <ellipse cx="380" cy="280" rx="330" ry="185" stroke="#2A2AFF" stroke-width=".8"/>
+    <ellipse cx="380" cy="280" rx="430" ry="248" stroke="#2A2AFF" stroke-width=".7"/>
+    <ellipse cx="380" cy="280" rx="540" ry="316" stroke="#2A2AFF" stroke-width=".5"/>
+    <circle cx="380" cy="280" r="8" fill="#2A2AFF" opacity=".4"/>
+    <circle cx="380" cy="280" r="4" fill="#2A2AFF" opacity=".7"/>
+    <line x1="200" y1="280" x2="560" y2="280" stroke="#2A2AFF" stroke-width=".6" opacity=".5"/>
+    <line x1="380" y1="80" x2="380" y2="480" stroke="#2A2AFF" stroke-width=".6" opacity=".5"/>
+  </svg>
+</div>
+<div class="container hero-grid">
+  <div class="hero-content">
+    <h1> <em>Tecnología geoespacial al servicio de su organización</em> </h1>
+    <p>Diseñamos soluciones en geomática para entidades públicas, empresas privadas y personas naturales mediante análisis espacial, cartografía, fotogrametría, drones y sistemas de información geográfica</p>
+    <div class="hero-buttons">
+      <a href="#contacto" class="btn btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.02 2.18 2 2 0 012 .02h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Solicitar Asesoría
+      </a>
+      <a href="#servicios" class="btn btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        Ver Portafolio
+      </a>
+    </div>
+    <div class="hero-tags">
+      <span class="tag">GIS</span>
+      <span class="tag">Catastro</span>
+      <span class="tag">Topografía GNSS RTK</span>
+      <span class="tag">Percepción remota</span>
+      <span class="tag">Cartografía</span>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- MISIÓN Y VISIÓN -->
+<section id="Nosotros">
+<div class="container">
+  <div class="section-title reveal">
+    <h2>¿Quiénes Somos?</h2>
+    <p>ECOGIS GEOMATIC S.A.S. es una empresa colombiana especializada en consultoría en geomática. Integramos Sistemas de Información Geográfica (SIG), cartografía, topografía, drones, fotogrametría, teledetección y análisis espacial para desarrollar soluciones técnicas de alto valor que apoyan la planificación, la gestión territorial y la toma de decisiones de entidades públicas, empresas y personas naturales.</p>
+  </div>
+  <div class="mv-grid">
+    <div class="mv-card reveal">
+      <div class="mv-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+      </div>
+      <h3>Nuestra Misión</h3>
+      <p>Impulsar el desarrollo territorial mediante soluciones geoespaciales innovadoras y de alta calidad, integrando conocimiento científico, tecnología y experiencia profesional para generar información confiable que facilite la planificación, la gestión del territorio y la toma de decisiones estratégicas.</p>
+    </div>
+    <div class="mv-card reveal">
+      <div class="mv-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <h3>Nuestra Visión</h3>
+      <p>Ser una empresa líder en consultoría geoespacial en Colombia y Latinoamérica, reconocida por la excelencia técnica, la innovación y la confianza de nuestros clientes, contribuyendo al desarrollo sostenible mediante soluciones basadas en información geográfica.</p>
+    </div>
+    <div class="mv-card reveal">
+      <div class="mv-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L2 9l6-1 4-6Z"/></svg>
+      </div>
+      <h3>Nuestros Valores</h3>
+      <ul class="mv-values-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Excelencia técnica y rigor científico</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Innovación tecnológica constante</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Compromiso con nuestros clientes</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sostenibilidad y responsabilidad territorial</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<!-- SERVICIOS -->
+<section id="servicios">
+<div class="container">
+  <div class="section-title reveal">
+    <div class="section-label"></div>
+    <h2>Portafolio de servicios</h2>
+    <p>Tecnología avanzada para captura, análisis y visualización de datos territoriales, ambientales y de infraestructura.</p>
+  </div>
+  <div class="services-grid">
+    <div class="card reveal" onclick="openModal('sig')">
+      <img src="images/servicios/GIS.jpg" alt="sig">
+      <div class="card-content">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
+        <h3>Geomática y SIG</h3>
+        <p>Plataformas GIS, geoportales, análisis espacial y automatización geográfica con tecnologías open source y propietarias.</p>
+        <div class="card-arrow">Ver más →</div>
+      </div>
+    </div>
+    <div class="card reveal" onclick="openModal('topografia')">
+      <img src="images/servicios/Topo.jpg" alt="Topo">
+      <div class="card-content">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 17l9-9 4 4 5-5"/><path d="M1 21h22"/></svg></div>
+        <h3>Topografía Avanzada</h3>
+        <p>Levantamientos GNSS RTK de alta precisión, modelos digitales de terreno y cartografía geodésica.</p>
+        <div class="card-arrow">Ver más →</div>
+      </div>
+    </div>
+    <div class="card reveal" onclick="openModal('drones')">
+      <img src="images/servicios/Foto.jpg" alt="fotogrametría">
+      <div class="card-content">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2" y="10" width="4" height="4" rx="1"/><rect x="18" y="10" width="4" height="4" rx="1"/><rect x="10" y="2" width="4" height="4" rx="1"/><rect x="10" y="18" width="4" height="4" rx="1"/><circle cx="12" cy="12" r="3"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="14" y1="12" x2="18" y2="12"/><line x1="12" y1="6" x2="12" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/></svg></div>
+        <h3>Fotogrametría UAV</h3>
+        <p>Captura aérea profesional con drones para ortomosaicos, modelos 3D y nubes de puntos de alta densidad.</p>
+        <div class="card-arrow">Ver más →</div>
+      </div>
+    </div>
+    <div class="card reveal" onclick="openModal('satelital')">
+      <img src="images/servicios/Per.jpg" alt="Percepción remota">
+      <div class="card-content">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div>
+        <h3>Percepción Remota</h3>
+        <p>Procesamiento de imágenes Sentinel y Landsat para monitoreo territorial y análisis multitemporal.</p>
+        <div class="card-arrow">Ver más →</div>
+      </div>
+    </div>
+    <div class="card reveal" onclick="openModal('territorial')">
+      <img src="images/servicios/Plani.jpg" alt="Planificación territorial">
+      <div class="card-content">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Planificación Territorial</h3>
+        <p>Ordenamiento territorial, análisis multicriterio, EOT, PBOT y soporte a planes de manejo de cuencas POMCA.</p>
+        <div class="card-arrow">Ver más →</div>
+      </div>
+    </div>
+    <div class="card reveal" onclick="openModal('consultoria')">
+      <img src="images/servicios/Consu.jpg" alt="consultoría">
+      <div class="card-content">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>Consultoría Técnica</h3>
+        <p>Formulación, estructuración y gestión de proyectos geoespaciales. Capacitación y soporte técnico especializado.</p>
+        <div class="card-arrow">Ver más →</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+<div class="container">
+  <div class="section-title reveal">
+    <div class="section-label"></div>
+    <h2>¿Cómo Trabajamos?</h2>
+    <p>Un proceso estructurado y transparente desde el primer contacto hasta la entrega final.</p>
+  </div>
+  <div class="process-grid">
+    <div class="process-step reveal"><div class="step-num">01 // INICIO</div><h4>Diagnóstico</h4><p>Reunión técnica para entender el proyecto, alcances, zona de estudio y requerimientos.</p></div>
+    <div class="process-step reveal"><div class="step-num">02 // PLANIFICACIÓN</div><h4>Propuesta Técnica</h4><p>Elaboramos una propuesta con metodología, cronograma, entregables y presupuesto.</p></div>
+    <div class="process-step reveal"><div class="step-num">03 // CAMPO</div><h4>Captura de Datos</h4><p>Trabajo de campo con equipos de última tecnología: drones, GPS RTK y sensores remotos.</p></div>
+    <div class="process-step reveal"><div class="step-num">04 // PROCESO</div><h4>Procesamiento</h4><p>Análisis y modelado de datos geoespaciales con software especializado.</p></div>
+    <div class="process-step reveal"><div class="step-num">05 // ENTREGA</div><h4>Productos Finales</h4><p>Cartografía, informes técnicos, geodatabases y plataformas SIG según requerimiento.</p></div>
+    <div class="process-step reveal"><div class="step-num">06 // SOPORTE</div><h4>Acompañamiento</h4><p>Soporte post-entrega, capacitación al equipo y ajustes según necesidades del cliente.</p></div>
+  </div>
+</div>
+</section>
+
+
+<!-- STATS -->
+<section class="stats">
+<div class="stats-deco">
+  <svg viewBox="0 0 600 400" fill="none"><ellipse cx="400" cy="200" rx="280" ry="160" stroke="white" stroke-width="1.5"/><ellipse cx="400" cy="200" rx="200" ry="110" stroke="white" stroke-width="1"/></svg>
+</div>
+<div class="container" style="position:relative;z-index:1;">
+  <div class="stats-grid">
+    <div class="stat reveal"><div class="stat-number" data-target="3">0</div><p>Proyectos Ejecutados</p></div>
+    <div class="stat reveal"><div class="stat-number" data-target="3">0</div><p>Clientes Activos</p></div>
+    <div class="stat reveal"><div class="stat-number" data-target="100" data-suffix="%">0%</div><p>Satisfacción</p></div>
+    <div class="stat reveal"><div class="stat-number">24/7</div><p>Soporte Técnico</p></div>
+  </div>
+</div>
+</section>
+
+
+<!-- EQUIPO TÉCNICO -->
+<section id="equipo">
+<div class="container">
+  <div class="section-title reveal">
+    <div class="section-label"></div>
+    <h2>Equipo técnico-Administrativo</h2>
+    <p>Profesionales con experiencia en geomática, SIG, teledetección y tecnologías geoespaciales de vanguardia.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-member reveal">
+      <img src="images/team/andres-urquijo.png" alt="Andres Jose Urquijo Parra" class="team-member-img">
+      <div class="team-member-content">
+        <h4>Andres Jose Urquijo Parra</h4>
+        <div class="role">Representante Legal</div>
+        <p class="profession">Geógrafo · Est Maestría en Geomática · 2+ años de experiencia</p>
+      </div>
+    </div>
+    <div class="team-member reveal">
+      <img src="images/team/Jose-Perez.png" alt="Jose Jaime Perez Daza" class="team-member-img">
+      <div class="team-member-content">
+        <h4>Jose Jaime Perez Daza</h4>
+        <div class="role">Representante Legal Suplente</div>
+        <p class="profession">Geógrafo · Piloto Certificado de Drones · 1+ años de experiencia</p>
+      </div>
+    </div>
+    <div class="team-member reveal">
+      <img src="images/team/Jose-urquijo.png" alt="Jose Angel Urquijo Parra" class="team-member-img">
+      <div class="team-member-content">
+        <h4>Jose Angel Urquijo Parra </h4>
+        <div class="role">Miembro del Equipo</div>
+        <p class="profession">Estadístico · Modelado estadistico · Analisis de Datos · 1+ años de experiencia</p>
+      </div>
+    </div>
+    <div class="team-member reveal">
+      <img src="images/team/Daniela-rojas.png" alt="Daniela Pauleth Tapia Rojas" class="team-member-img">
+      <div class="team-member-content">
+        <h4>Daniela Pauleth Tapia Rojas</h4>
+        <div class="role">Miembro del Equipo</div>
+        <p class="profession">Ingeniera Biológica · Trabajo de campo y laboratorio · 1+ años de experiencia</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+<div class="container contact-wrapper">
+  <div class="contact-left reveal">
+    <div class="section-label">// Contacto</div>
+    <h2>Hablemos de tu Proyecto</h2>
+    <p>¿Tienes un proyecto territorial, ambiental o de infraestructura? Cuéntanos y te daremos una propuesta técnica sin costo.</p>
+    <div class="contact-info">
+      <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.02 2.18 2 2 0 012 .02h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span>+573123257225</span></div>
+      <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>ecogisgeomatic@gmail.com</span></div>
+      <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Colombia</span></div>
+    </div>
+  </div>
+  <div class="contact-form reveal">
+    <div class="form-row">
+      <div class="form-group"><label>Nombre</label><input type="text" placeholder="Tu nombre completo"></div>
+      <div class="form-group"><label>Empresa</label><input type="text" placeholder="Nombre de la organización"></div>
+    </div>
+    <div class="form-group"><label>Correo Electrónico</label><input type="email" placeholder="tu@correo.com"></div>
+    <div class="form-group">
+      <label>Servicio de Interés</label>
+      <select>
+        <option value="" disabled selected>Seleccionar servicio...</option>
+        <option>Geomática y SIG</option><option>Topografía Avanzada</option>
+        <option>Fotogrametría UAV</option><option>Percepción Remota</option>
+        <option>Planificación Territorial</option><option>Consultoría Técnica</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Descripción del Proyecto</label><textarea placeholder="Cuéntanos sobre tu proyecto, zona geográfica y alcance..."></textarea></div>
+    <a href="mailto:ecogisgeomatic@gmail.com?subject=Cotización%20ECOGIS" class="btn btn-primary" style="width:100%;justify-content:center;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Enviar Solicitud
+    </a>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="footer-logo logo" href="#inicio">
+        <img src="images/logo-negativo.svg" alt="ECOGIS GEOMATIC S.A.S" class="brand-logo">
+      </a>
+      <p>Transformamos datos espaciales en decisiones estratégicas para el desarrollo territorial y ambiental de Colombia.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61592551063734" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.24 10.44 22v-7.03H7.9v-2.91h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.91h-2.34V22C18.34 21.24 22 17.08 22 12.06z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/ecogisgeomaticsas/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.21.6 1.76 1.15.5.5.9 1.1 1.15 1.76.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 01-1.15 1.76c-.5.5-1.1.9-1.76 1.15-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 01-1.76-1.15 4.9 4.9 0 01-1.15-1.76c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.21 1.15-1.76a4.9 4.9 0 011.76-1.15c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65-.05 1.05-.06 1.37-.06 4.04s.01 2.99.06 4.04c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 00-.66-1.02 2.7 2.7 0 00-1.02-.66c-.31-.12-.78-.26-1.65-.3-1.05-.05-1.37-.06-4.04-.06zm0 3.06a5.14 5.14 0 110 10.28 5.14 5.14 0 010-10.28zm0 1.8a3.34 3.34 0 100 6.68 3.34 3.34 0 000-6.68zm5.34-1.99a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col"><h5>Servicios</h5><a href="#servicios">Geomática y SIG</a><a href="#servicios">Topografía</a><a href="#servicios">Fotogrametría UAV</a><a href="#servicios">Percepción Remota</a><a href="#servicios">Planificación Territorial</a></div>
+    <div class="footer-col"><h5>Empresa</h5><a href="#proyectos">Proyectos</a><a href="#proceso">Metodología</a><a href="#contacto">Contacto</a></div>
+    <div class="footer-col"><h5>Contacto</h5><a href="tel:+573123257225">+573123257225</a><a href="mailto:ecogisgeomatic@gmail.com">ecogisgeomatic@gmail.com</a><a href="https://wa.me/573123257225" target="_blank">WhatsApp</a></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 ECOGIS GEOMATIC S.A.S</p>
+  </div>
+</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="serviceModal">
+<div class="modal-box" id="modalBox">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <div id="modalBody"></div>
+</div>
+</div>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/573123257225?text=Hola%20ECOGIS%20GEOMATIC%20S.A.S,%20quisiera%20más%20información" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24"><path d="M20.52 3.48A11.82 11.82 0 0012.04 0C5.5 0 .17 5.33.17 11.87c0 2.09.55 4.13 1.6 5.94L0 24l6.36-1.67a11.8 11.8 0 005.68 1.45h.01c6.54 0 11.87-5.33 11.87-11.87 0-3.17-1.24-6.15-3.4-8.43zM12.04 21.68a9.83 9.83 0 01-5.02-1.37l-.36-.21-3.73.98 1-3.63-.23-.37a9.86 9.86 0 01-1.51-5.22c0-5.44 4.43-9.87 9.86-9.87 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 012.89 6.97c0 5.44-4.43 9.82-9.89 9.82zm5.42-7.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.62.72.23 1.37.2 1.89.12.58-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/></svg>
+</a>
+
+<script>
+const modals={
+sig:{img:"images/servicios/GIS.jpg",label:"Geomática · SIG",title:"Geomática y Sistemas de Información Geográfica",desc:"Implementamos plataformas SIG a medida, geoportales web interactivos y soluciones de automatización geográfica con tecnologías open source (QGIS, GeoServer, PostGIS) y propietarias (ArcGIS, ESRI). Analizamos, gestionamos y visualizamos datos espaciales para la toma de decisiones estratégicas.",feats:[{t:"Geoportales Web",d:"Desarrollo de visores cartográficos interactivos con OpenLayers y Leaflet.",i:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>'},{t:"Cartografía Temática",d:"Producción de mapas temáticos, atlas y productos cartográficos a distintas escalas.",i:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/>'},{t:"Automatización GIS",d:"Scripts Python, ModelBuilder y automatización de flujos de trabajo geoespaciales.",i:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>'},{t:"Geodatabases",d:"Diseño e implementación de bases de datos espaciales en PostGIS y geodatabases ESRI.",i:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>'}]},
+topografia:{img:"images/servicios/Topo.jpg",label:"Geodesia · Topografía",title:"Topografía y Geodesia de Alta Precisión",desc:"Realizamos levantamientos topográficos y geodésicos con equipos de última generación: estaciones totales robotizadas, GPS diferencial y tecnología GNSS RTK. Generamos modelos digitales de terreno, curvas de nivel y cartografía base para todo tipo de proyectos.",feats:[{t:"GNSS RTK",d:"Posicionamiento en tiempo real con precisión centimétrica para proyectos de alta exactitud.",i:'<path d="M1 6l11 11 11-11"/><path d="M1 1l11 11 11-11"/>'},{t:"MDT y MDS",d:"Modelos Digitales de Terreno y Superficie para análisis hidráulicos y volumétricos.",i:'<path d="M3 17l9-9 4 4 5-5"/><path d="M1 21h22"/>'},{t:"Batimetría",d:"Levantamientos batimétricos en ríos, embalses y zonas costeras con ecosonda.",i:'<path d="M2 12h20M2 18h20M8 6h8M6 9h12"/>'},{t:"Replanteo y Trazado",d:"Replanteo de obras civiles, ejes viales, redes de servicios y edificaciones.",i:'<circle cx="12" cy="12" r="1"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>'}]},
+drones:{img:"images/servicios/Foto.jpg",label:"UAV · Fotogrametría",title:"Fotogrametría UAV con Drones Profesionales",desc:"Utilizamos drones de alta precisión para la captura aérea de imágenes y generación de productos fotogramétricos: ortomosaicos georreferenciados, modelos 3D, nubes de puntos densas y mapas de índice de vegetación. Ideal para minería, infraestructura, agricultura y monitoreo ambiental.",feats:[{t:"Ortomosaicos",d:"Mosaicos de alta resolución georreferenciados con precisión de 2-5 cm/píxel.",i:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/>'},{t:"Modelos 3D",d:"Reconstrucción tridimensional de superficies, edificaciones e infraestructura.",i:'<path d="M12 2l9 4-9 4-9-4 9-4z"/><path d="M3 10l9 4 9-4M3 16l9 4 9-4"/>'},{t:"Nubes de Puntos",d:"Generación de nubes de puntos densas con clasificación automática de la superficie.",i:'<circle cx="12" cy="12" r="2"/><circle cx="5" cy="7" r="1.5"/><circle cx="19" cy="7" r="1.5"/><circle cx="5" cy="17" r="1.5"/><circle cx="19" cy="17" r="1.5"/>'},{t:"NDVI Multiespectral",d:"Análisis de vegetación con índices NDVI, NDWI para agricultura de precisión.",i:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'}]},
+satelital:{img:"images/servicios/Per.jpg",label:"Satélites · Percepción Remota",title:"Percepción Remota y Análisis Satelital",desc:"Procesamos imágenes satelitales de sensores ópticos y radar (Sentinel-1/2, Landsat, PlanetScope) para monitoreo territorial, detección de cambios, cobertura del suelo, análisis de riesgos y seguimiento ambiental.",feats:[{t:"Coberturas del Suelo",d:"Mapas de uso y cobertura con metodologías Corine Land Cover y clasificación supervisada.",i:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>'},{t:"Análisis Multitemporal",d:"Detección de cambios en cobertura, deforestación y expansión urbana.",i:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>'},{t:"Monitoreo de Riesgos",d:"Análisis de amenazas: inundaciones, deslizamientos, incendios y sequías.",i:'<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'},{t:"Índices Espectrales",d:"Cálculo de índices NDVI, MNDWI, NBR para análisis de vegetación y cuerpos de agua.",i:'<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>'}]},
+territorial:{img:"images/servicios/Plani.jpg",label:"Ordenamiento · Territorio",title:"Planificación y Ordenamiento Territorial",desc:"Apoyamos entidades públicas y privadas en procesos de ordenamiento territorial: formulación de EOT y PBOT, elaboración de estudios de aptitud del suelo, gestión del riesgo y planes de manejo de cuencas POMCA.",feats:[{t:"Formulación EOT/PBOT",d:"Estructuración técnica de Esquemas y Planes Básicos de Ordenamiento Territorial.",i:'<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'},{t:"Análisis Multicriterio",d:"Evaluación de aptitud del suelo, zonificación ambiental y modelación de escenarios.",i:'<path d="M18 20V10M12 20V4M6 20v-6"/>'},{t:"POMCA y Cuencas",d:"Soporte técnico en planes de ordenamiento y manejo de cuencas hidrográficas.",i:'<circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>'},{t:"Gestión del Riesgo",d:"Estudios básicos de amenaza, vulnerabilidad y riesgo para incorporar al POT.",i:'<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>'}]},
+consultoria:{img:"images/servicios/Consu.jpg",label:"Consultoría · Capacitación",title:"Consultoría Técnica y Formulación de Proyectos",desc:"Brindamos asesoría experta en la estructuración, formulación y gestión de proyectos geoespaciales. Apoyamos a entidades en implementación de soluciones tecnológicas y capacitación del personal técnico.",feats:[{t:"Formulación de Proyectos",d:"Estructuración técnica y económica de proyectos con componente geoespacial.",i:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>'},{t:"Capacitación GIS",d:"Cursos en QGIS, ArcGIS, Python para SIG, teledetección y topografía.",i:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>'},{t:"Supervisión Técnica",d:"Interventoría y supervisión técnica de proyectos con componente cartográfico.",i:'<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'},{t:"Soporte Continuo",d:"Acompañamiento permanente y mantenimiento de plataformas SIG.",i:'<path d="M18.36 6.64A9 9 0 115.64 18.36"/><path d="M23 11l-4 4-4-4M23 11v8"/>'}]}
+};
+
+function openModal(key){
+const s=modals[key];
+const featsHtml=s.feats.map(f=>`<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">${f.i}</svg></div><h4>${f.t}</h4><p>${f.d}</p></div>`).join('');
+document.getElementById('modalBody').innerHTML=`<div class="modal-img"><img src="${s.img}" alt="${s.title}"><div class="modal-img-overlay"></div></div><div class="modal-body"><div class="modal-eyebrow">${s.label}</div><h2>${s.title}</h2><p>${s.desc}</p><div class="modal-features">${featsHtml}</div></div>`;
+document.getElementById('serviceModal').classList.add('active');
+document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('serviceModal').classList.remove('active');document.body.style.overflow='';}
+document.getElementById('serviceModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+const ham=document.getElementById('ham');
+const mMenu=document.getElementById('mobileMenu');
+ham.addEventListener('click',()=>{ham.classList.toggle('active');mMenu.classList.toggle('open');});
+function closeMobileMenu(){ham.classList.remove('active');mMenu.classList.remove('open');}
+
+function scrollGallery(dir){
+const track=document.getElementById('galleryTrack');
+const item=track.querySelector('.gallery-item');
+const amount=item?item.offsetWidth+22:340;
+track.scrollBy({left:dir*amount,behavior:'smooth'});
+}
+
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',scrollY>60);});
+
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+function animateCounter(el){
+const target=parseInt(el.dataset.target);
+const suffix=el.dataset.suffix||'+';
+const duration=1600;const start=performance.now();
+const step=(t)=>{const p=Math.min((t-start)/duration,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.floor(ease*target)+suffix;if(p<1)requestAnimationFrame(step);};
+requestAnimationFrame(step);
+}
+const cObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting&&e.target.dataset.target){animateCounter(e.target);cObs.unobserve(e.target);}});},{threshold:.5});
+document.querySelectorAll('.stat-number[data-target]').forEach(el=>cObs.observe(el));
+</script>
+</body>
+</html>
